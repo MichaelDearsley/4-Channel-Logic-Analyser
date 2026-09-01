@@ -9,10 +9,10 @@ volatile byte buffer[1000]; //Capture buffer stores 1000 samples, volatile as ac
 volatile int sampleIndex = 0; 
 volatile bool data_captured = false;
 
-volatile byte uartData = 0; //Stores UART character transmitting
-volatile int uartBit = -1; //Keeps track of which UART bit, -1: waiting 0:start bit 1-8:data bits 9:stop bit
+volatile byte uartData = 0; //Stores UART character currently being transmitted
+volatile int uartBit = -1; //Keeps track of which UART bit, -1 = waiting,  0 = start bit, 1-8 = data bits, 9 = stop bit
 volatile bool uartSending = false;
-volatile int uartTicks = 0; //Counts timer1 interrupt (interrupt every 10us UART bit lasts 104us, hence 10 timer ticks needed)
+volatile int uartTicks = 0; //Counts timer1 interrupt (each interrupt is approximately 10us and each UART bit lasts 104us, hence 10 timer ticks needed)
 
 void setup()
 {
@@ -28,8 +28,8 @@ void setup()
   pinMode(test_button, INPUT_PULLUP);
   noInterrupts(); //Disable interrupts while configuring timer1
 
-  TCCR1A = 0; //Set hardware register for timer 1 to 0
-  TCCR1B = 0;
+  TCCR1A = 0; //Reset Timer 1 control register A
+  TCCR1B = 0; //Reset Timer 1 control register B
   TCCR1B |= (1 << WGM12); //Set timer 1 to CTC mode (counts up till it gets to OCR1A value)
   OCR1A = 19; //Timer limit, Arduino clock is set to 16MHz with a prescaler of 8 is 16MHz / 8 = 2million timer counts / s /20 = 100k times per second which is sampling rate
   TCCR1B |= (1 << CS11); //Set prescaler to 8
@@ -100,7 +100,7 @@ void sendMessage() //Sends UART message
 
 ISR(TIMER1_COMPA_vect) //Timer1 interrupt service routine, executes every 10us
 {
-  byte value = (PIND >> 2) & 0x0F; //Reads all four digital pins (D2-D5)
+  byte value = (PIND >> 2) & 0x0F; //Reads all four digital pins (D2-D5) and packs their states into the lower 4 bits
 
   if (sampleIndex < 1000) 
   {
@@ -147,7 +147,7 @@ ISR(TIMER1_COMPA_vect) //Timer1 interrupt service routine, executes every 10us
   {
     data_captured = true;
 
-    TIMSK1 &= ~(1 << OCIE1A); //Turn off timer1 interupt
+    TIMSK1 &= ~(1 << OCIE1A); //Turn off Timer 1 interrupt
 
     digitalWrite(UART_tx, HIGH); //UART returns to IDLE
     uartSending = false;
