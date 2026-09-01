@@ -7,15 +7,15 @@ plt.show(block=False) #Opens graph without stopping python
 
 while True:
 
-    samples = [] #Array for 1000 samples
+    samples = [] #List for 1000 samples
 
     while len(samples) < 1000:
 
-        plt.pause(0.001) #Small time gap to allow matplotlib to load
+        plt.pause(0.001) #Allows Matplotlib to process GUI events
 
         while arduino.in_waiting > 0: 
 
-            line = arduino.readline().decode().strip() #Reads the incoming bytes, decodes and removes characters to get binary
+            line = arduino.readline().decode().strip() #Reads the incoming bytes, converts them to text and removes whitespace
 
             if line: #Check data is recieved 
 
@@ -33,9 +33,9 @@ while True:
     print("Received", len(samples)) 
 
     channel_1 = [(i >> 0) & 1 for i in samples] #Extracts bit 0 from the byte which correlates to channel 1
-    channel_2 = [(i >> 1) & 1 for i in samples] #Extracts bit 1 from the byte which correlates to channel 1
-    channel_3 = [(i >> 2) & 1 for i in samples] #Extracts bit 2 from the byte which correlates to channel 2
-    channel_4 = [(i >> 3) & 1 for i in samples] #Extracts bit 3 from the byte which correlates to channel 3
+    channel_2 = [(i >> 1) & 1 for i in samples] #Extracts bit 1 from the byte which correlates to channel 2
+    channel_3 = [(i >> 2) & 1 for i in samples] #Extracts bit 2 from the byte which correlates to channel 3
+    channel_4 = [(i >> 3) & 1 for i in samples] #Extracts bit 3 from the byte which correlates to channel 4
 
     decoded_message = "" #Start UART decoder
 
@@ -57,7 +57,7 @@ while True:
 
             if len(data_bits) == 8: #Ensure all 8 bits collected
 
-                value = 0 #Create empty bit
+                value = 0 #Creates an empty value to reconstruct the byte
                 for bit in range(8): #Reconstruct the byte
 
                     value |= (data_bits[bit] << bit) #Places each bit into correct position
@@ -66,7 +66,7 @@ while True:
 
                     decoded_message += chr(value) #Converts number to character
 
-            i += 100 #Move to next UART frame
+            i += 100 #Moves approximately one UART frame forward
 
         else:
 
