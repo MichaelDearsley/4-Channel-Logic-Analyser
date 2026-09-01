@@ -166,3 +166,5 @@ Possible future improvements include:
 ## Project status
 
 **Working prototype complete.**
+
+https://github.com/user-attachments/assets/a227f25e-0a18-4238-bb18-60a180c8d443
