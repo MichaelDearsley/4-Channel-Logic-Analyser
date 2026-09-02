@@ -86,22 +86,17 @@ Digital inputs
 Arduino D2-D5
      │
      ▼
-Timer 1 @ ~100 kHz
+Timer 1 100 kHz
      │
      ▼
 1,000 sample buffer
      │
      ▼
-USB Serial @ 115200
+USB Serial 115200 baud
      │
      ▼
-Python
-     │
-     ├── Channel separation
-     │
-     ├── Waveform display
-     │
-     └── UART decoding
+Python: Channel Separation, Waveform Display, UART Decoding
+
 ```
 
 ## UART test setup
@@ -119,10 +114,6 @@ Channels 2-4 can be connected to other digital signals for observation. For unus
 
 ## Limitations
 
-This project is intended as a simple educational logic analyser rather than a replacement for professional test equipment.
-
-Current limitations include:
-
 * Approximately 100 kHz sampling rate
 * 1,000 samples per capture
 * UART decoding currently configured for the tested UART format and baud rate
@@ -132,8 +123,6 @@ Current limitations include:
 * Input voltage must remain within the safe limits of the Arduino being used
 
 ## What I learned
-
-This project involved:
 
 * Digital input capture
 * Bit manipulation
@@ -149,8 +138,6 @@ This project involved:
 * Simultaneous multi-channel sampling
 
 ## Future improvements
-
-Possible future improvements include:
 
 * Adjustable sampling rate
 * Adjustable UART baud rate
