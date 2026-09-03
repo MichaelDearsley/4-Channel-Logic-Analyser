@@ -77,28 +77,6 @@ The decoded message is displayed above the waveform:
 UART: HELLO
 ```
 
-## Data flow
-
-```text
-Digital inputs
-     │
-     ▼
-Arduino D2-D5
-     │
-     ▼
-Timer 1 100 kHz
-     │
-     ▼
-1,000 sample buffer
-     │
-     ▼
-USB Serial 115200 baud
-     │
-     ▼
-Python: Channel Separation, Waveform Display, UART Decoding
-
-```
-
 ## UART test setup
 
 For the built-in UART test:
@@ -121,21 +99,6 @@ Channels 2-4 can be connected to other digital signals for observation. For unus
 * No analogue voltage measurement
 * No automatic SPI or I²C decoding
 * Input voltage must remain within the safe limits of the Arduino being used
-
-## What I learned
-
-* Digital input capture
-* Bit manipulation
-* Timer 1 configuration
-* CTC mode
-* Hardware registers
-* Interrupt service routines
-* UART communication
-* Serial communication between Arduino and Python
-* Python serial data processing
-* Matplotlib waveform visualisation
-* Binary and ASCII conversion
-* Simultaneous multi-channel sampling
 
 ## Future improvements
 
