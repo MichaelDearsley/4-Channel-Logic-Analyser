@@ -22,15 +22,12 @@ A simple 4-channel digital logic analyser built using an Arduino and Python. The
 * Jumper wires
 
 ### Pin configuration
-
-| Function         | Arduino pin |
-| ---------------- | ----------: |
-| Channel 1        |          D2 |
-| Channel 2        |          D3 |
-| Channel 3        |          D4 |
-| Channel 4        |          D5 |
-| Test button      |          D6 |
-| UART transmitter |          D8 |
+- Channel 1 - D2
+- Channel 2 - D3
+- Channel 3 - D4
+- Channel 4 - D5
+- Test Button - D6
+- UART Transmitter - D8
 
 The digital inputs use the Arduino's internal pull-up resistors.
 
@@ -81,10 +78,7 @@ UART: HELLO
 
 For the built-in UART test:
 
-```text
-Arduino D8 ───────► Arduino D2 (CH1)
-Arduino GND ──────► common GND
-```
+D8 is connected to D2 (Channel 1) with both GNDS connected together.
 
 The D6 button starts the test capture.
 
